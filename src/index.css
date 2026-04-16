@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+Todas as cores, gradientes, fontes, etc., devem ser definidos aqui.
+Todas as cores DEVEM ser HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 20 14% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14% 8%;
+
+    --primary: 14 88% 55%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 25 95% 60%;
+    --secondary-foreground: 20 14% 8%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 14 88% 55%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 14 88% 55%;
+
+    --radius: 0.75rem;
+
+    /* TITANS Brand Colors */
+    --titans-red: 0 85% 55%;
+    --titans-orange: 14 88% 55%;
+    --titans-gold: 45 95% 60%;
+    --titans-dark: 20 14% 8%;
+    
+    /* Gradiente */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--titans-red)), hsl(var(--titans-orange)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--titans-orange)), hsl(var(--titans-gold)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(210 40% 98%));
+    
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(var(--titans-orange) / 0.2);
+    --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.1);
+    
+    /* Animação */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 20 14% 8%;
+    --foreground: 0 0% 95%;
+
+    --card: 20 14% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 20 14% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 14 88% 55%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 25 95% 60%;
+    --secondary-foreground: 20 14% 8%;
+
+    --muted: 20 14% 15%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 14 88% 55%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 20 14% 20%;
+    --input: 20 14% 15%;
+    --ring: 14 88% 55%;
+    
+    /* Dark mode e shadows */
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(20 14% 12%));
+    --shadow-glow: 0 0 40px hsl(var(--titans-orange) / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
