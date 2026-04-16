@@ -4,15 +4,25 @@
 # 1: Clone o repo
 git clone <url>
 
-# 2: dependencias
+obs passos 2 e 3 n são obrigatórios
+
+# 2: virtualize o ambiente com o python
+python -m venv venv
+
+# 3: ative o ambiente virtual
+venv/Scripts/activate no windows, atente de habilitar a execução de scripts
+source venv/bin/activate no linux
+
+# 4: dependencias
 npm i
 
-# 3: inicie o ambiente local
+# 5: inicie o ambiente local
 npm run dev
 ```
 
 ## tecnologias utilizadas:
 
+- python
 - Vite
 - TypeScript
 - React
