@@ -6,19 +6,23 @@ import Footer from "@/components/Footer";
 import { ArrowLeft, Shield, Swords, Flame, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import robotCombate from '@/assets/robotCombate.jpeg';
+
 const Combate = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
       <section className="pt-20 pb-16 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
+
+            {/* 
             <Link to="/" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Voltar ao início
             </Link>
+            */}
             
             <Badge className="mb-4 bg-gradient-to-r from-titans-red to-titans-orange text-white">
               Modalidade
@@ -35,12 +39,18 @@ const Combate = () => {
             </p>
             
             <div className="flex flex-wrap justify-center gap-4">
+              
+             {/* 
+           <div className="flex flex-wrap justify-center gap-4">
               <Button variant="hero" size="lg">
-                Ver Batalhas
+                Ver Competições
               </Button>
               <Button variant="outline" size="lg">
-                Especificações de Guerra
+                Especificações Técnicas
               </Button>
+            </div>
+            */}
+              
             </div>
           </div>
         </div>
@@ -58,8 +68,8 @@ const Combate = () => {
                 resistência, agilidade e poder destrutivo.
               </p>
               <p className="text-muted-foreground mb-8">
-                Utilizamos materiais de alta resistência, sistemas de proteção avançados e 
-                armas especializadas para criar máquinas de combate superiores.
+                Utilizamos materiais de alta resistência, sistemas de proteção e 
+                armas mortiferas para criar máquinas de combate sinistras.
               </p>
               
               <div className="grid grid-cols-2 gap-4">
@@ -76,8 +86,13 @@ const Combate = () => {
             
             <div className="bg-gradient-to-br from-titans-red/20 to-titans-orange/20 rounded-lg p-8 aspect-square flex items-center justify-center">
               <div className="text-center">
-                <Swords className="h-24 w-24 text-titans-red mx-auto mb-4" />
-                <p className="text-muted-foreground">Robô de combate em ação</p>
+                
+              <img 
+                      src={robotCombate} 
+                      alt="Modalidade robótica" 
+                      className="w-full h-full object-cover transition-all duration-1000"
+               />
+
               </div>
             </div>
           </div>
@@ -90,7 +105,7 @@ const Combate = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Arsenal de Guerra</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Tecnologias militares adaptadas para o combate robótico
+              Tecnologias adaptadas para o combate robótico
             </p>
           </div>
           
@@ -150,10 +165,10 @@ const Combate = () => {
 
           {/* Leaders */}
           <div className="mb-12">
-            <h3 className="text-xl font-semibold text-center mb-8">Líderes</h3>
+            <h3 className="text-xl font-semibold text-center mb-8">Gerentes de Projeto</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
               {[
-                { name: "Carlos Ferreira", role: "Líder de Combate", expertise: "Armas e Sistemas de Ataque" },
+                { name: "Octávio Silva", role: "Líder de Combate", expertise: "Armas e Sistemas de Ataque" },
                 { name: "Ana Rodrigues", role: "Líder de Defesa", expertise: "Blindagem e Proteção" },
               ].map((leader, index) => (
                 <Card key={index} className="text-center">
