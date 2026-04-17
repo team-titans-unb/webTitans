@@ -22,6 +22,7 @@ npm run dev
 
 ## tecnologias utilizadas:
 
+- node.js
 - python
 - Vite
 - TypeScript
