@@ -530,7 +530,7 @@ const Index = () => {
                   <span className="text-white font-bold text-lg">IEEE</span>
                 </div>
                 <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">RARs</span>
+                  <span className="text-white font-bold text-lg">RAS</span>
                 </div>
               </div>
               
@@ -546,7 +546,7 @@ const Index = () => {
                   <span className="text-white font-bold text-lg">Dr Eletrônico</span>
                 </div>
                 <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">RARs</span>
+                  <span className="text-white font-bold text-lg">RAS</span>
                 </div>
                   <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
                   <span className="text-white font-bold text-lg">IEEE</span>
