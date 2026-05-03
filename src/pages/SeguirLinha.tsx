@@ -6,7 +6,13 @@ import Footer from "@/components/Footer";
 import { ArrowLeft, Trophy, Zap, Target, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import seguidorEletronica from '@/assets/seguidorEletronica.jpeg';
+import seguidorEletronica from '@/assets/seguidorCad2.png';
+import felipeDasNevesPhoto from "@/assets/imgLipeTitans2.jpg";
+import arthurPhoto from "@/assets/arthur.png";
+import gustavoPhoto from "@/assets/gustavo.png";
+import henriquePhoto from "@/assets/henrique.png";
+import joaoVictorPhoto from "@/assets/joaoVictor.png";
+import thamiresPhoto from "@/assets/thamires.png";
 
 import lider from '@/assets/combateGif.gif';
 
@@ -168,15 +174,27 @@ const SeguirLinha = () => {
             <h3 className="text-xl font-semibold text-center mb-8">Gerentes de Projeto</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
               {[
-                { name: "Felipe das Neves", role: "Software", expertise: "Mapeamento e Controle" },
-                { name: "Arthur Vilas boas", role: "Controle", expertise: "Sensoriamento" },
+                {
+                  name: "Felipe das Neves",
+                  role: "Software",
+                  expertise: "Mapeamento e Controle",
+                  photo: felipeDasNevesPhoto,
+                },
+                {
+                  name: "Arthur Vilas boas",
+                  role: "Controle",
+                  expertise: "Sensoriamento",
+                  photo: arthurPhoto,
+                },
               ].map((leader, index) => (
                 <Card key={index} className="text-center">
                   <CardContent className="p-6">
-                    <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center border-2 border-dashed border-border">
-
-                      <span className="text-muted-foreground text-xs">Foto2</span>
-
+                    <div className="mx-auto mb-4 h-24 w-24 overflow-hidden rounded-full border-2 border-titans-orange/25 bg-muted">
+                      <img
+                        src={leader.photo}
+                        alt={`Foto de ${leader.name}`}
+                        className="h-full w-full object-cover"
+                      />
                     </div>
                     <h4 className="font-semibold mb-1">{leader.name}</h4>
                     <p className="text-titans-orange text-sm mb-2">{leader.role}</p>
@@ -192,15 +210,39 @@ const SeguirLinha = () => {
             <h3 className="text-xl font-semibold text-center mb-8">Membros</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { name: "Henrique Oliveira", role: "Eletrônica", expertise: "Esquemático e Eletrônica" },
-                { name: "Gustavo Emmanuel", role: "Projetista", expertise: "Modelagem Cad" },
-                { name: "Thamires Ellen", role: "Controle", expertise: "Programação dos Atuadores" },
-                { name: "João Victor", role: "Eletrônica", expertise: "Motores e Encoder" },
+                {
+                  name: "Henrique Oliveira",
+                  role: "Eletrônica",
+                  expertise: "Esquemático e Eletrônica",
+                  photo: henriquePhoto,
+                },
+                {
+                  name: "Gustavo Emmanuel",
+                  role: "Projetista",
+                  expertise: "Modelagem Cad",
+                  photo: gustavoPhoto,
+                },
+                {
+                  name: "Thamires Ellen",
+                  role: "Controle",
+                  expertise: "Programação dos Atuadores",
+                  photo: thamiresPhoto,
+                },
+                {
+                  name: "João Victor",
+                  role: "Eletrônica",
+                  expertise: "Motores e Encoder",
+                  photo: joaoVictorPhoto,
+                },
               ].map((member, index) => (
                 <Card key={index} className="text-center">
                   <CardContent className="p-6">
-                    <div className="w-20 h-20 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center border-2 border-dashed border-border">
-                      <span className="text-muted-foreground text-xs">Foto</span>
+                    <div className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full border-2 border-titans-orange/25 bg-muted">
+                      <img
+                        src={member.photo}
+                        alt={`Foto de ${member.name}`}
+                        className="h-full w-full object-cover"
+                      />
                     </div>
                     <h4 className="font-semibold mb-1">{member.name}</h4>
                     <p className="text-titans-orange text-sm mb-2">{member.role}</p>

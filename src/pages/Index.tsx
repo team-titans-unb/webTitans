@@ -19,11 +19,14 @@ import sslEvent from '@/assets/sslEvent.jpeg';
 import pet from '@/assets/pet.jpeg';
 import symposium from '@/assets/symposium.jpeg';
 import vssEvent from '@/assets/vssEvent.jpeg';
+import psRoverImage from "@/assets/psRover.jpeg";
 
 import seguidorGif from '@/assets/seguidorGif.gif';
 import vssGif from '@/assets/vssGif.gif';
 import sslGif from '@/assets/sslGif.gif';
 import combateGif from '@/assets/combateGif.gif';
+
+const PARTNERSHIP_LOGOS = ["UnB", "IEEE", "RARs", "Dr Eletrônico"] as const;
 
 const Index = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -398,17 +401,66 @@ const Index = () => {
       <section className="py-16 bg-gradient-to-br from-titans-red/10 via-titans-orange/5 to-titans-gold/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
+           {/*
             <div className="inline-flex items-center bg-gradient-to-r from-titans-red to-titans-orange text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
               <span className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
-              INSCRIÇÕES ENCERRADAS
+              INSCRIÇÕES ABERTAS - PROJETO ROVER 2026-1
             </div>
-            
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Processo Seletivo 2026</h2>
+           */}
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">INSCRIÇÕES ABERTAS - PROJETO ROVER 2026-1</h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
               {/* Quer fazer parte da nossa equipe? Estamos com inscrições abertas para novos membros 
               interessados em robótica competitiva, programação, eletrônica e gestão. */}
-              Quer fazer parte da nossa equipe? As inscrições são abertas no final do segundo semestre do ano.
+
+              {/* Quer fazer parte da nossa equipe? As inscrições são abertas no final do segundo semestre do ano.*/}
+
+              Quer fazer parte da nossa equipe? Estamos com inscrições abertas para novos membros 
+              interessados em contruir um rover para fins de competição. 
+
             </p>
+
+
+
+            <div className="group relative mx-auto mb-10 max-w-md">
+              <div
+                className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-to-br from-titans-red/50 via-titans-orange/40 to-titans-gold/30 opacity-70 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+                aria-hidden
+              />
+              <div className="relative overflow-hidden rounded-2xl border border-titans-red/25 bg-gradient-to-br from-titans-red/10 to-titans-orange/5 p-1 shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_25px_50px_-12px_rgba(185,28,28,0.35)]">
+                <div className="overflow-hidden rounded-xl bg-black/20 ring-1 ring-inset ring-white/10">
+                  <img
+                    src={psRoverImage}
+                    alt="Cartaz do processo seletivo — projeto rover TITANS"
+                    className="w-full h-auto object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04]"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center mb-6">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-titans-red to-titans-orange hover:from-titans-red/90 hover:to-titans-orange/90 text-white font-semibold px-8 py-3 shadow-lg shadow-titans-red/25"
+                asChild
+              >
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScdpgShgFvmgjkOS31xk9nXVh3CM0WfdlsyU6ZRiP8CcqotcQ/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Inscrever-se no processo seletivo
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              
+            As inscrições são somente para o projeto rover, para os outros projetos acompanhe nossas redes sociais que em breve abrirão!
+
+            </p>
+
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
               <div className="bg-card/50 backdrop-blur-sm border border-titans-orange/20 rounded-xl p-6">
@@ -520,38 +572,23 @@ const Index = () => {
             <h2 className="text-2xl font-bold text-white">Parcerias</h2>
           </div>
           <div className="relative overflow-hidden">
-            <div className="flex items-center animate-scroll-left">
-              {/* First set */}
-              <div className="flex items-center space-x-8 flex-shrink-0">
-                <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">UnB</span>
+            <div className="flex w-max animate-scroll-left motion-reduce:animate-none">
+              {[0, 1].map((copy) => (
+                <div
+                  key={copy}
+                  className="flex shrink-0 items-center gap-8 pr-8"
+                  aria-hidden={copy === 1 ? true : undefined}
+                >
+                  {PARTNERSHIP_LOGOS.map((name) => (
+                    <div
+                      key={`${copy}-${name}`}
+                      className="flex min-w-fit items-center whitespace-nowrap rounded-lg bg-white/20 px-6 py-4"
+                    >
+                      <span className="text-lg font-bold text-white">{name}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">IEEE</span>
-                </div>
-                <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">RARs</span>
-                </div>
-              </div>
-              
-              {/* Duplicate set for continuous scroll */}
-              <div className="flex items-center space-x-8 flex-shrink-0 ml-8">
-                <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">UnB</span>
-                </div>
-                <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">IEEE</span>
-                </div>
-                <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">Dr Eletrônico</span>
-                </div>
-                <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">RARs</span>
-                </div>
-                  <div className="flex items-center bg-white/20 rounded-lg px-6 py-4 min-w-fit whitespace-nowrap">
-                  <span className="text-white font-bold text-lg">IEEE</span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
