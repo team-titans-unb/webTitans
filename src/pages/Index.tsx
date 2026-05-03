@@ -26,7 +26,7 @@ import vssGif from '@/assets/vssGif.gif';
 import sslGif from '@/assets/sslGif.gif';
 import combateGif from '@/assets/combateGif.gif';
 
-const PARTNERSHIP_LOGOS = ["UnB", "IEEE", "RARs", "Dr Eletrônico"] as const;
+const PARTNERSHIP_LOGOS = ["UnB", "IEEE", "RAS", "Dr Eletrônico"] as const;
 
 const Index = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
