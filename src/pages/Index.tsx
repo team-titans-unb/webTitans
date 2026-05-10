@@ -231,8 +231,8 @@ const Index = () => {
                     <div className="w-12 h-12 bg-gradient-to-br from-titans-red to-titans-orange rounded-lg mx-auto mb-2 flex items-center justify-center">
                       <Zap className="h-6 w-6 text-white" />
                     </div>
-                    <div className="text-2xl font-bold text-titans-orange">4</div>
-                    <div className="text-sm text-muted-foreground">Modalidades</div>
+                    <div className="text-2xl font-bold text-titans-orange">5</div>
+                    <div className="text-sm text-muted-foreground">modalidades de competição</div>
                   </CardContent>
                 </Card>
                 
@@ -241,8 +241,8 @@ const Index = () => {
                     <div className="w-12 h-12 bg-gradient-to-br from-titans-orange to-titans-gold rounded-lg mx-auto mb-2 flex items-center justify-center">
                       <Target className="h-6 w-6 text-white" />
                     </div>
-                    <div className="text-2xl font-bold text-titans-orange">100+</div>
-                    <div className="text-sm text-muted-foreground">Projetos</div>
+                    <div className="text-2xl font-bold text-titans-orange">mais de 14</div>
+                    <div className="text-sm text-muted-foreground">projetos</div>
                   </CardContent>
                 </Card>
               </div>
@@ -398,8 +398,11 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Processo Seletivo Section */}
-      <section className="py-16 bg-gradient-to-br from-titans-red/10 via-titans-orange/5 to-titans-gold/10">
+      {/* Processo Seletivo Section — âncora para login "Saiba como participar" */}
+      <section
+        id="inscricoes"
+        className="scroll-mt-20 py-16 bg-gradient-to-br from-titans-red/10 via-titans-orange/5 to-titans-gold/10"
+      >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
            {/*

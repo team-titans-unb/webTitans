@@ -110,7 +110,7 @@ const Login = () => {
                 Não é membro ainda?
               </p>
               <Button variant="outline" className="w-full" asChild>
-                <Link to="/#equipes">
+                <Link to="/#inscricoes">
                   Saiba como participar
                 </Link>
               </Button>
