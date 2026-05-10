@@ -537,7 +537,7 @@ const Index = () => {
                 </p>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   A meta é ambiciosa: levar o rover do papel com excelência técnica. Já foram arrecadados cerca de{" "}
-                  <span className="text-foreground font-medium">R$ 26 mil</span>; a meta da campanha é de{" "}
+                  <span className="text-foreground font-medium">R$ 11 mil</span>; a meta da campanha é de{" "}
                   <span className="text-foreground font-medium">R$ 100 mil</span> para componentes e estrutura
                   necessários ao rover. Qualquer contribuição faz diferença.
                 </p>
