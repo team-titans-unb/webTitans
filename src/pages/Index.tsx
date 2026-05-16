@@ -637,23 +637,23 @@ const Index = () => {
         */}
         
       {/* Partnerships Section */}
-      <section className="py-8 bg-gradient-to-r from-titans-red to-titans-orange overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center mb-4">
+      <section className="py-8 bg-gradient-to-r from-titans-red to-titans-orange overflow-hidden w-full">
+        <div className="w-full"> 
+          <div className="flex items-center justify-center mb-6">
             <h2 className="text-2xl font-bold text-white">Parcerias</h2>
           </div>
-          <div className="relative overflow-hidden">
-            <div className="flex w-max animate-scroll-left motion-reduce:animate-none">
-              {[0, 1].map((copy) => (
+          <div className="relative w-full overflow-hidden">
+            <div className="flex w-max animate-scroll-left hover:[animation-play-state:paused]">
+              {[0, 1, 2].map((copy) => (
                 <div
                   key={copy}
-                  className="flex shrink-0 items-center gap-8 pr-8"
-                  aria-hidden={copy === 1 ? true : undefined}
+                  className="flex shrink-0 items-center gap-8 pl-8"
+                  aria-hidden={copy > 0 ? true : undefined}
                 >
-                  {PARTNERSHIP_LOGOS.map((name) => (
+                  {PARTNERSHIP_LOGOS.map((name, index) => (
                     <div
-                      key={`${copy}-${name}`}
-                      className="flex min-w-fit items-center whitespace-nowrap rounded-lg bg-white/20 px-6 py-4"
+                      key={`${copy}-${name}-${index}`}
+                      className="flex h-14 min-w-[200px] items-center justify-center whitespace-nowrap rounded-lg bg-white/20 px-8 py-4 backdrop-blur-sm"
                     >
                       <span className="text-lg font-bold text-white">{name}</span>
                     </div>
