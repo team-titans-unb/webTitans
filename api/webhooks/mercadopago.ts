@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { supabaseAdmin } from "../_lib/supabase-admin";
-import { mpPayment } from "../_lib/mercadopago";
-import { verificarAssinaturaMP } from "../_lib/mp-signature";
+import { supabaseAdmin } from "../_lib/supabase-admin.js";
+import { mpPayment } from "../_lib/mercadopago.js";
+import { verificarAssinaturaMP } from "../_lib/mp-signature.js";
 
 type MPWebhookBody = {
   type?: string;

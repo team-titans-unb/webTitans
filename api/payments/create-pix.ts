@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { supabaseAdmin } from "../_lib/supabase-admin";
-import { mpPayment } from "../_lib/mercadopago";
+import { supabaseAdmin } from "../_lib/supabase-admin.js";
+import { mpPayment } from "../_lib/mercadopago.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
