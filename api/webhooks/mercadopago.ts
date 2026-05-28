@@ -38,13 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     secret,
   });
   if (!assinatura.ok) {
-    // DIAGNÓSTICO TEMPORÁRIO — remover depois de validar o webhook em produção.
-    console.warn("[webhook] assinatura rejeitada:", assinatura.reason, {
-      hasXSignature: !!req.headers["x-signature"],
-      hasXRequestId: !!req.headers["x-request-id"],
-      dataIdSource: queryDataId ? "query" : bodyDataId ? "body" : "nenhum",
-      dataId,
-    });
+    console.warn("[webhook] assinatura rejeitada:", assinatura.reason);
     return res.status(401).json({ error: "assinatura inválida" });
   }
 
