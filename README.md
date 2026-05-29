@@ -53,3 +53,9 @@ npm run dev
 - shadcn-ui
 - Tailwind CSS
 
+## Docker
+
+windows
+
+winget install -e --id Docker.DockerDesktop
+
