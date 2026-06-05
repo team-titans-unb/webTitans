@@ -1,7 +1,7 @@
 // Fonte única de verdade do local de retirada das impressões.
 // O local é fixo e público; não há consulta a banco, Storage ou API.
 
-export const LOCAL_RETIRADA = "Sala 207, Prédio LDTEA – FCTE Gama";
+export const LOCAL_RETIRADA = "Sala 208, Prédio LDTEA – FCTE Gama";
 
 export type FotoRetirada = {
   src: string;
@@ -23,10 +23,10 @@ export const FOTOS_RETIRADA: FotoRetirada[] = [
   },
   {
     src: "/retirada/foto-3.svg",
-    alt: "Corredor do segundo andar em direção à Sala 207",
+    alt: "Corredor do segundo andar em direção à Sala 208",
   },
   {
     src: "/retirada/foto-4.svg",
-    alt: "Porta da Sala 207, ponto de retirada das impressões",
+    alt: "Porta da Sala 208, ponto de retirada das impressões",
   },
 ];
