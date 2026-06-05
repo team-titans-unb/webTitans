@@ -32,7 +32,7 @@ out
 *.njsproj
 *.sln
 *.sw?
-
+.claude
 venv
 .venv
 

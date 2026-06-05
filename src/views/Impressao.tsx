@@ -13,6 +13,7 @@ import { UploadPDF } from "@/components/impressao/UploadPDF";
 import { ConfiguracaoImpressao } from "@/components/impressao/ConfiguracaoImpressao";
 import { TelaPagamento } from "@/components/impressao/TelaPagamento";
 import { TelaSucesso } from "@/components/impressao/TelaSucesso";
+import { BotaoOndeRetirar } from "@/components/impressao/BotaoOndeRetirar";
 import { supabase } from "@/lib/supabase";
 import type { ModoCor } from "@/lib/types";
 
@@ -117,9 +118,11 @@ const Impressao = () => {
                 Imprima seu PDF
               </span>
             </h1>
-            <p className="text-muted-foreground mb-8">
+            <p className="text-muted-foreground mb-4">
               Envie o arquivo, escolha cor ou preto-e-branco, pague via PIX e retire na sede.
             </p>
+
+            <BotaoOndeRetirar className="mb-8" />
 
             {passo === "UPLOAD" && (
               <UploadPDF

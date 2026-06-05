@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { BotaoOndeRetirar } from "@/components/impressao/BotaoOndeRetirar";
 
 type Props = {
   pedidoId: string;
@@ -23,7 +24,10 @@ export function TelaSucesso({ pedidoId }: Props) {
           <p className="text-xs text-muted-foreground">Protocolo</p>
           <p className="text-2xl font-mono font-bold tracking-widest">{protocolo}</p>
         </div>
-        <Button asChild className="mt-4">
+
+        <BotaoOndeRetirar variante="destacado" className="mt-4" />
+
+        <Button asChild variant="outline" className="mt-2">
           <Link href="/">Voltar ao início</Link>
         </Button>
       </CardContent>

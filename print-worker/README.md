@@ -102,6 +102,7 @@ em `IMPRIMINDO` por mais de `STUCK_TIMEOUT` (padrão 15 min) voltam sozinhos par
 | `PRINT_TIMEOUT` | não | `180` | Segundos de espera pela conclusão do job |
 | `STUCK_TIMEOUT` | não | `900` | Segundos até re-filar um pedido travado em IMPRIMINDO |
 | `REACHABILITY_TIMEOUT` | não | `3` | Timeout (s) da checagem de alcançabilidade do destino de filas de rede antes de submeter |
+| `LP_OPTIONS` | não | `fit-to-page` | Opções `-o` do `lp` (tokens separados por espaço). Padrão escala à área imprimível e auto-rotaciona paisagem, evitando PDFs deitados cortados. Vazio = sem opções |
 
 ## Failover entre filas (anti-duplicação)
 

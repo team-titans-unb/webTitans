@@ -42,7 +42,9 @@ Erros transitórios no ciclo são logados e **não** derrubam o worker (o loop c
 4. **Escolha de fila + impressão** (`filas_candidatas`, `fila_saudavel`,
    `enviar_para_impressora`) — grava o PDF num arquivo temporário e tenta as filas em ordem
    (primária Wi-Fi → fallback USB). Pula filas insalubres (`lpstat -p`) e submete via
-   `lp -d <fila> <arquivo>`, extraindo o job id da saída do CUPS.
+   `lp -d <fila> -o <opção>... <arquivo>` (opções de `LP_OPTIONS`, padrão `fit-to-page`
+   para escalar/auto-rotacionar e não cortar PDFs em paisagem), extraindo o job id da
+   saída do CUPS.
 5. **Conclusão** (`aguardar_conclusao`) — faz polling com `lpstat -o <fila>` na fila onde o
    job foi aceito, até o job sumir ou estourar `PRINT_TIMEOUT`. Concluiu → `IMPRESSO` +
    `printed_at`. Timeout → cancela o job e marca `ERRO`.
@@ -88,6 +90,7 @@ opcional (`PRINTER_NAME_FALLBACK`). O failover é **restrito à pré-submissão*
 | `PRINT_TIMEOUT` | não | `180` | Segundos de espera pela conclusão do job. |
 | `STUCK_TIMEOUT` | não | `900` | Segundos até re-filar um pedido travado em `IMPRIMINDO`. |
 | `REACHABILITY_TIMEOUT` | não | `3` | Timeout (s) da checagem de alcançabilidade do destino de filas de rede antes de submeter. |
+| `LP_OPTIONS` | não | `fit-to-page` | Opções `-o` do `lp` (tokens separados por espaço). O padrão escala à área imprimível e auto-rotaciona paisagem, evitando PDFs deitados cortados. Vazio = sem opções. |
 
 Se faltar uma variável obrigatória, o worker encerra na inicialização com mensagem clara.
 

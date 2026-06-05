@@ -64,6 +64,12 @@ class Config:
         self.print_timeout = int(os.environ.get("PRINT_TIMEOUT", "180"))
         self.stuck_timeout = int(os.environ.get("STUCK_TIMEOUT", "900"))
         self.reachability_timeout = int(os.environ.get("REACHABILITY_TIMEOUT", "3"))
+        # Opções `-o` passadas ao `lp`. Padrão `fit-to-page`: escala cada página
+        # para a área imprimível preservando a proporção e auto-rotaciona páginas
+        # em paisagem, evitando que PDFs deitados saiam cortados nas bordas em
+        # filas driverless (IPP Everywhere). Tokens separados por espaço viram um
+        # `-o <token>` cada (ex.: "fit-to-page media=A4"). Vazio = sem opções.
+        self.lp_options = os.environ.get("LP_OPTIONS", "fit-to-page").split()
 
         missing = [
             name
@@ -346,15 +352,23 @@ def fila_saudavel(fila: str) -> bool:
     return "disabled" not in proc.stdout
 
 
-def enviar_para_impressora(fila: str, caminho: str) -> str:
+def enviar_para_impressora(fila: str, caminho: str, opcoes: list[str]) -> str:
     """Envia o arquivo via lp (1 job) na `fila` e retorna o job id do CUPS.
+
+    `opcoes` são os tokens de `LP_OPTIONS`; cada um vira um `-o <token>` (ex.:
+    `fit-to-page`, `media=A4`), controlando escala/mídia para que PDFs em
+    paisagem não saiam cortados.
 
     Levanta `FalhaPreSubmissao` se o `lp` retornar erro ou se o job id não for
     extraível — ambos casos em que o CUPS NÃO aceitou o job (nada impresso),
     logo é seguro tentar a próxima fila.
     """
+    cmd = ["lp", "-d", fila]
+    for opcao in opcoes:
+        cmd += ["-o", opcao]
+    cmd.append(caminho)
     proc = subprocess.run(
-        ["lp", "-d", fila, caminho],
+        cmd,
         capture_output=True,
         text=True,
         env=CUPS_ENV,
@@ -471,7 +485,7 @@ def processar(sb: Client, cfg: Config, pedido: dict) -> None:
                 continue
 
             try:
-                job_id = enviar_para_impressora(fila, caminho)
+                job_id = enviar_para_impressora(fila, caminho, cfg.lp_options)
             except FalhaPreSubmissao as err:
                 log.warning(
                     "Pedido %s: pré-submissão à fila %s falhou (%s) -> %s",
