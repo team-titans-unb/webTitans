@@ -9,7 +9,7 @@ import { LOCAL_RETIRADA, FOTOS_RETIRADA } from "@/lib/retirada";
 export const metadata: Metadata = {
   title: "Onde retirar sua impressão | TITANS",
   description:
-    "Local de retirada das impressões da TITANS: Sala 207, Prédio LDTEA – FCTE Gama. Veja o endereço e fotos do caminho até a sala.",
+    "Local de retirada das impressões da TITANS: Sala 208, Prédio LDTEA – FCTE Gama. Veja o endereço e fotos do caminho até a sala.",
 };
 
 export default function RetiradaPage() {
