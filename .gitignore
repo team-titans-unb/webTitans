@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Env files (secrets)
+.env
+.env.local
+.env.*.local
+print-worker/.env
+
 # Next.js
 .next
 next-env.d.ts
@@ -29,5 +35,14 @@ out
 
 venv
 .venv
+
+# Python
+__pycache__/
+
+# Supabase CLI local state
+supabase/.temp/
+
+# Worker do pdfjs gerado pelo script de cópia (postinstall/prebuild)
+public/pdf.worker.min.mjs
 
 

@@ -1,0 +1,12 @@
+# Configuração do Supabase CLI.
+#
+# A Edge Function cleanup-fila NÃO autentica pelo JWT do Supabase: ela valida o
+# nosso CLEANUP_FUNCTION_SECRET no header Authorization. Por isso o gateway não
+# pode exigir um JWT — senão barra as chamadas do pg_cron (e dos nossos testes)
+# com UNAUTHORIZED_INVALID_JWT_FORMAT antes de chegar no código da função.
+#
+# Mantendo verify_jwt = false aqui, qualquer `supabase functions deploy
+# cleanup-fila` futuro preserva esse comportamento (sem depender do flag
+# --no-verify-jwt na linha de comando).
+[functions.cleanup-fila]
+verify_jwt = false

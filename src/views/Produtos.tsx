@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ShoppingCart } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Printer } from "lucide-react";
 import Link from "next/link";
 
 const Produtos = () => {
@@ -101,6 +101,28 @@ const Produtos = () => {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Print Service CTA */}
+      <section className="py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="max-w-4xl mx-auto border-titans-orange/40 bg-gradient-to-br from-titans-red/5 to-titans-orange/5">
+            <CardContent className="p-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-titans-red to-titans-orange text-white">
+                <Printer className="h-8 w-8" />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-2xl font-bold mb-2">Serviço de Impressão</h2>
+                <p className="text-muted-foreground">
+                  Envie seu PDF, pague via PIX e retire a impressão na sede da TITANS.
+                </p>
+              </div>
+              <Button asChild variant="titans" size="lg" className="shrink-0">
+                <Link href="/impressao">Imprimir PDF</Link>
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
