@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Zap, Shield, Camera, Brain, Users, Code, Trophy, Target } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import bannerConfra from "@/assets/banner/confra26.jpeg";
 import bannerTeamMember from "@/assets/banner/teamMember.jpeg";
@@ -15,6 +14,11 @@ import bannerRcx2025 from "@/assets/banner/rcx2025.png";
 import bannerVssEvent from "@/assets/banner/vssEvent.jpeg";
 import bannerCienciaNaEstrada from "@/assets/banner/cienciaNaEstrada.png";
 import bannerCienciaNaEstradaExtensao from "@/assets/banner/cienciaNaEstradaExtencao.png";
+import bannerConfra2024 from "@/assets/banner/Confra24.jpg";
+import bannerEquipe from "@/assets/banner/Equipe.jpg";
+import bannerSenado from "@/assets/banner/Senado.jpg";
+import bannerRcx from "@/assets/banner/Rcx.jpg";
+import bannerEvento from "@/assets/banner/Evento.jpg";
 import psRoverImage from "@/assets/psRover.jpeg";
 import roverTitansImage from "@/assets/roverTitans.jpeg";
 
@@ -50,6 +54,11 @@ const Index = () => {
     { src: bannerConfra.src, alt: "Confraternização TITANS" },
     { src: bannerCienciaNaEstrada.src, alt: "Ciência na Estrada — TITANS" },
     { src: bannerCienciaNaEstradaExtensao.src, alt: "Ciência na Estrada — extensão" },
+    { src: bannerConfra2024.src, alt: "Confraternização — Titans" },
+    { src: bannerEquipe.src, alt: "Preparativos Rover"},
+    { src: bannerSenado.src, alt: "Reunião no Senado"},
+    { src: bannerRcx.src, alt: "RCX - titans"},
+    { src: bannerEvento.src, alt: "Evento - Titans"},
   ];
 
   useEffect(() => {

@@ -228,7 +228,6 @@ const Combate = () => {
                 { name: "Laís", role: "Membro", expertise: "Equipe de combate", photo: laisPhoto },
                 { name: "Osmar", role: "Membro", expertise: "Equipe de combate", photo: osmarPhoto },
                 { name: "Paulo Lucca", role: "Membro", expertise: "Equipe de combate", photo: pauloLuccaPhoto },
-                { name: "Erick", role: "Membro", expertise: "Equipe de combate" },
                 { name: "Rafaela", role: "Membro", expertise: "Equipe de combate", photo: rafaelaPhoto },
                 { name: "Sara", role: "Membro", expertise: "Equipe de combate", photo: saraPhoto },
               ].map((member, index) => (
