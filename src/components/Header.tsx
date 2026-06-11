@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Users } from "lucide-react";
@@ -14,6 +16,7 @@ const Header = () => {
     { name: "Inscrições", href: "/#inscricoes" },
     { name: "Apoiar", href: "/#apoiar" },
     { name: "Projetos Destaques", href: "/projetos" },
+    { name: "Impressão", href: "/impressao" },
   ];
 
   return (

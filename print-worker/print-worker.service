@@ -1,0 +1,21 @@
+[Unit]
+Description=Web-to-Print worker (HP Laser MFP via fila CUPS de rede + fallback)
+# Sobe só depois da rede e do CUPS estarem prontos.
+After=network-online.target cups.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Ajuste para o usuário que tem acesso à impressão (membro do grupo lp/lpadmin).
+User=CHANGE_ME_USER
+# Caminho onde o repositório/worker foi instalado.
+WorkingDirectory=/opt/print-worker
+# Arquivo de env com SUPABASE_*, PRINTER_NAME etc. Permissão 0600.
+EnvironmentFile=/opt/print-worker/.env
+# Use o Python do virtualenv onde requirements.txt foi instalado.
+ExecStart=/opt/print-worker/.venv/bin/python /opt/print-worker/worker.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

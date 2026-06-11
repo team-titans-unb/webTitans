@@ -1,0 +1,2 @@
+supabase>=2.0
+pypdf>=4.0
