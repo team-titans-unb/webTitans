@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Zap, Shield, Camera, Brain, Users, Code, Trophy, Target } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import bannerConfra from "@/assets/banner/confra26.jpeg";
 import bannerTeamMember from "@/assets/banner/teamMember.jpeg";
@@ -15,6 +14,11 @@ import bannerRcx2025 from "@/assets/banner/rcx2025.png";
 import bannerVssEvent from "@/assets/banner/vssEvent.jpeg";
 import bannerCienciaNaEstrada from "@/assets/banner/cienciaNaEstrada.png";
 import bannerCienciaNaEstradaExtensao from "@/assets/banner/cienciaNaEstradaExtencao.png";
+import bannerConfra2024 from "@/assets/banner/Confra24.jpg";
+import bannerEquipe from "@/assets/banner/Equipe.jpg";
+import bannerSenado from "@/assets/banner/Senado.jpg";
+import bannerRcx from "@/assets/banner/Rcx.jpg";
+import bannerEvento from "@/assets/banner/Evento.jpg";
 import psRoverImage from "@/assets/psRover.jpeg";
 import roverTitansImage from "@/assets/roverTitans.jpeg";
 
@@ -50,6 +54,11 @@ const Index = () => {
     { src: bannerConfra.src, alt: "Confraternização TITANS" },
     { src: bannerCienciaNaEstrada.src, alt: "Ciência na Estrada — TITANS" },
     { src: bannerCienciaNaEstradaExtensao.src, alt: "Ciência na Estrada — extensão" },
+    { src: bannerConfra2024.src, alt: "Confraternização — Titans" },
+    { src: bannerEquipe.src, alt: "Preparativos Rover"},
+    { src: bannerSenado.src, alt: "Reunião no Senado"},
+    { src: bannerRcx.src, alt: "RCX - titans"},
+    { src: bannerEvento.src, alt: "Evento - Titans"},
   ];
 
   useEffect(() => {
@@ -382,20 +391,21 @@ const Index = () => {
               INSCRIÇÕES ABERTAS - PROJETO ROVER 2026-1
             </div>
            */}
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">INSCRIÇÕES ABERTAS - PROJETO ROVER 2026-1</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">INSCRIÇÕES FECHADAS</h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+
               {/* Quer fazer parte da nossa equipe? Estamos com inscrições abertas para novos membros 
               interessados em robótica competitiva, programação, eletrônica e gestão. */}
 
-              {/* Quer fazer parte da nossa equipe? As inscrições são abertas no final do segundo semestre do ano.*/}
+               Quer fazer parte da nossa equipe? As inscrições são abertas no final do segundo semestre do ano.
 
-              Quer fazer parte da nossa equipe? Estamos com inscrições abertas para novos membros 
-              interessados em contruir um rover para fins de competição. 
+             {/* Quer fazer parte da nossa equipe? Estamos com inscrições abertas para novos membros 
+              interessados em contruir um rover para fins de competição. */}
 
             </p>
 
 
-
+            {/* 
             <div className="group relative mx-auto mb-10 max-w-md">
               <div
                 className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-to-br from-titans-red/50 via-titans-orange/40 to-titans-gold/30 opacity-70 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
@@ -412,6 +422,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
+
 
             <div className="flex justify-center mb-6">
               <Button
@@ -435,7 +446,7 @@ const Index = () => {
             As inscrições são somente para o projeto rover, para os outros projetos acompanhe nossas redes sociais que em breve abrirão!
 
             </p>
-
+            */}
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
               <div className="bg-card/50 backdrop-blur-sm border border-titans-orange/20 rounded-xl p-6">

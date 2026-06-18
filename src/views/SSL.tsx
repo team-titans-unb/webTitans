@@ -15,6 +15,7 @@ import gabriellyCarvalhoPhoto from "@/assets/fotosSsl/gabriellyCarvalho.png";
 import pedroLucenaPhoto from "@/assets/fotosSsl/pedroLucena.png";
 import lucasAlvesPhoto from "@/assets/fotosSsl/lucasAlves.png";
 import raulPhoto from "@/assets/fotosSsl/raul.png";
+import gabrielSouzaPhoto from "@/assets/fotosSsl/GabrielDeSouza.jpg";
 
 const SSL = () => {
   return (
@@ -234,7 +235,7 @@ const SSL = () => {
                   photo: gabriellyCarvalhoPhoto,
                 },
                 { name: "Raul Braga", role: "Membro", expertise: "Software", photo: raulPhoto },
-                { name: "Gabriel de Sousa", role: "Membro", expertise: "Software" },
+                { name: "Gabriel de Sousa", role: "Membro", expertise: "Software", photo: gabrielSouzaPhoto },
                 { name: "Lucas Alves", role: "Membro", expertise: "Software", photo: lucasAlvesPhoto },
               ].map((member, index) => (
                 <Card key={`${member.name}-${index}`} className="text-center">
