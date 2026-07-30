@@ -3,7 +3,6 @@
 ## Purpose
 
 Manter o Storage e a tabela `fila_impressao` enxutos por meio de limpeza automática periódica (Edge Function `cleanup-fila` agendada via pg_cron, de hora em hora): pedidos não pagos são descartados após 1 hora, o PDF de pedidos impressos é removido após 7 dias e a própria linha é apagada após 6 meses — nunca tocando em pedidos `PAGO` ainda não impressos. A função é protegida por um segredo compartilhado (`CLEANUP_FUNCTION_SECRET`).
-
 ## Requirements
 ### Requirement: Limpeza de pedidos não pagos órfãos
 
@@ -60,4 +59,24 @@ A função de limpeza SHALL exigir um segredo compartilhado (`CLEANUP_FUNCTION_S
 #### Scenario: Invocação agendada com segredo executa
 - **WHEN** o job agendado chama a função com o `CLEANUP_FUNCTION_SECRET` correto
 - **THEN** a limpeza roda normalmente
+
+### Requirement: Limpeza de tokens de reimpressão expirados
+
+A Edge Function `cleanup-fila` SHALL, na mesma execução periódica (no mínimo de hora em
+hora), remover de `reimpressao_tokens` as linhas que já não têm utilidade: tokens
+`expira_em < now()` ou com `usado_em` preenchido há mais de uma janela curta (ex.: 24h).
+A limpeza SHALL preservar tokens ainda válidos (não expirados e não usados). Essa remoção
+NÃO SHALL afetar a retenção de PDFs nem as demais regras já definidas.
+
+#### Scenario: Token expirado é removido
+- **WHEN** existe um `reimpressao_tokens` com `expira_em` no passado
+- **THEN** na próxima execução da limpeza a linha é removida
+
+#### Scenario: Token usado antigo é removido
+- **WHEN** existe um token com `usado_em` preenchido há mais da janela de retenção curta
+- **THEN** a limpeza remove a linha
+
+#### Scenario: Token ainda válido é preservado
+- **WHEN** existe um token não expirado e ainda não usado
+- **THEN** a limpeza não o toca
 

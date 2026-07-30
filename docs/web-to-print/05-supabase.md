@@ -18,8 +18,8 @@ nullable (`0005`).
 | --- | --- | --- |
 | `id` | uuid PK | `gen_random_uuid()`; serve de protocolo e de token de leitura. |
 | `created_at` | timestamptz | `now()`. |
-| `pdf_path` | text? | Caminho no bucket (`<uuid>/<nome>.pdf`). Anulado pela limpeza após 7 dias. |
-| `num_paginas` | int | `> 0`. Declarado pelo cliente, **reconferido e sobrescrito** pelo `create-pix` (e pelo worker). |
+| `pdf_path` | text? | Caminho no bucket (`<uuid>/<nome>.pdf`) — **sempre um único objeto por pedido**, mesmo quando o cliente escolhe vários PDFs (o navegador os mescla antes de subir; ver [03](03-checkout.md)). Anulado pela limpeza após 7 dias. |
+| `num_paginas` | int | `> 0`; com vários arquivos, a **soma** das páginas. Declarado pelo cliente, **reconferido e sobrescrito** pelo `create-pix` (e pelo worker). |
 | `modo_cor` | text | `'PB'` ou `'COLORIDO'`. |
 | `valor_centavos` | int? | `NULL` no INSERT; preenchido pelo `create-pix` (`> 0`). |
 | `status` | text | `AGUARDANDO_PAGAMENTO`/`PAGO`/`IMPRIMINDO`/`IMPRESSO`/`ERRO`/`CANCELADO`. Default `AGUARDANDO_PAGAMENTO`. |

@@ -46,3 +46,4 @@ supabase/.temp/
 public/pdf.worker.min.mjs
 
 
+tsconfig.tsbuildinfo

@@ -25,6 +25,9 @@ function normalizarQuantidade(valor: string): number {
 
 type Props = {
   numPaginas: number;
+  // Quantos arquivos o cliente juntou neste pedido. Serve só para o rótulo do
+  // total — o cálculo do valor não muda: as páginas já vêm somadas.
+  numArquivos: number;
   enviando: boolean;
   onConfirmar: (args: {
     modoCor: ModoCor;
@@ -34,7 +37,13 @@ type Props = {
   onVoltar: () => void;
 };
 
-export function ConfiguracaoImpressao({ numPaginas, enviando, onConfirmar, onVoltar }: Props) {
+export function ConfiguracaoImpressao({
+  numPaginas,
+  numArquivos,
+  enviando,
+  onConfirmar,
+  onVoltar,
+}: Props) {
   const [precos, setPrecos] = useState<Precos | null>(null);
   const [quantidadeCopias, setQuantidadeCopias] = useState<number>(QUANTIDADE_MINIMA);
 
@@ -55,7 +64,10 @@ export function ConfiguracaoImpressao({ numPaginas, enviando, onConfirmar, onVol
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <p className="text-sm text-muted-foreground">Total de páginas</p>
+          <p className="text-sm text-muted-foreground">
+            Total de páginas
+            {numArquivos > 1 && ` (${numArquivos} arquivos juntos)`}
+          </p>
           <p className="text-2xl font-semibold">{numPaginas}</p>
         </div>
 

@@ -14,7 +14,9 @@ import { ConfiguracaoImpressao } from "@/components/impressao/ConfiguracaoImpres
 import { TelaPagamento } from "@/components/impressao/TelaPagamento";
 import { TelaSucesso } from "@/components/impressao/TelaSucesso";
 import { BotaoOndeRetirar } from "@/components/impressao/BotaoOndeRetirar";
+import { StatusImpressora } from "@/components/impressao/StatusImpressora";
 import { supabase } from "@/lib/supabase";
+import type { ArquivoSelecionado } from "@/lib/pdf-utils";
 import type { ModoCor } from "@/lib/types";
 
 type Passo = "UPLOAD" | "CONFIG" | "PAGAMENTO" | "SUCESSO" | "TIMEOUT";
@@ -31,6 +33,10 @@ type DadosPagamento = {
 
 const Impressao = () => {
   const [passo, setPasso] = useState<Passo>("UPLOAD");
+  // A lista de arquivos escolhidos vive aqui (e não dentro do UploadPDF) para
+  // sobreviver ao ir e voltar entre UPLOAD e CONFIG; `file` é o PDF final do
+  // pedido — o original quando há um arquivo só, o mesclado quando há vários.
+  const [arquivos, setArquivos] = useState<ArquivoSelecionado[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [numPaginas, setNumPaginas] = useState<number>(0);
   const [valorCentavos, setValorCentavos] = useState<number>(0);
@@ -102,13 +108,17 @@ const Impressao = () => {
       <section className="pt-24 pb-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
-            <Link
-              href="/"
-              className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Voltar ao início
-            </Link>
+            {/* O Link precisa de linha própria: como elemento inline, dividiria
+                a linha com o Badge e os textos se sobreporiam. */}
+            <div className="mb-6">
+              <Link
+                href="/"
+                className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Voltar ao início
+              </Link>
+            </div>
 
             <Badge className="mb-4 bg-gradient-to-r from-titans-red to-titans-orange text-white">
               Serviço de Impressão
@@ -122,10 +132,14 @@ const Impressao = () => {
               Envie o arquivo, escolha cor ou preto-e-branco, pague via PIX e retire na sede.
             </p>
 
+            <StatusImpressora className="mb-4" />
+
             <BotaoOndeRetirar className="mb-8" />
 
             {passo === "UPLOAD" && (
               <UploadPDF
+                itens={arquivos}
+                onItensChange={setArquivos}
                 onPDFPronto={({ file: f, numPaginas: n }) => {
                   setFile(f);
                   setNumPaginas(n);
@@ -137,9 +151,17 @@ const Impressao = () => {
             {passo === "CONFIG" && (
               <ConfiguracaoImpressao
                 numPaginas={numPaginas}
+                numArquivos={arquivos.length}
                 enviando={enviando}
                 onConfirmar={confirmarConfiguracao}
-                onVoltar={() => setPasso("UPLOAD")}
+                onVoltar={() => {
+                  // Descarta o PDF final: se a lista mudar, a mesclagem é
+                  // refeita ao concluir o upload de novo (nunca se envia um
+                  // arquivo que não corresponde à lista atual).
+                  setFile(null);
+                  setNumPaginas(0);
+                  setPasso("UPLOAD");
+                }}
               />
             )}
 

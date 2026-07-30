@@ -1,13 +1,26 @@
 "use client";
 
 import { useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Upload, FileText } from "lucide-react";
+import { ArrowDown, ArrowUp, FileText, Upload, X } from "lucide-react";
 import { toast } from "sonner";
-import { validarArquivoPDF, contarPaginas } from "@/lib/pdf-utils";
+import {
+  contarPaginas,
+  mesclarPDFs,
+  validarSelecao,
+  ErroMesclagemPDF,
+  MAX_ARQUIVOS_POR_PEDIDO,
+  MAX_PDF_BYTES,
+  type ArquivoSelecionado,
+} from "@/lib/pdf-utils";
 
 type Props = {
+  // A lista vive na página: assim ela sobrevive ao ir e voltar entre os passos
+  // (o arquivo mesclado, esse sim, é descartado ao voltar).
+  itens: ArquivoSelecionado[];
+  onItensChange: Dispatch<SetStateAction<ArquivoSelecionado[]>>;
   onPDFPronto: (args: { file: File; numPaginas: number }) => void;
 };
 
@@ -16,54 +29,139 @@ function formatarTamanho(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 }
 
-export function UploadPDF({ onPDFPronto }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [arquivo, setArquivo] = useState<File | null>(null);
-  const [analisando, setAnalisando] = useState(false);
-  const [paginas, setPaginas] = useState<number | null>(null);
+function plural(n: number, singular: string, plural: string): string {
+  return `${n} ${n === 1 ? singular : plural}`;
+}
 
-  async function processarArquivo(file: File) {
-    const validacao = validarArquivoPDF(file);
-    if (!validacao.ok) {
-      toast.error(validacao.mensagem);
-      return;
-    }
-    setArquivo(file);
-    setPaginas(null);
+export function UploadPDF({ itens, onItensChange, onPDFPronto }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [analisando, setAnalisando] = useState(false);
+  const [preparando, setPreparando] = useState(false);
+
+  const totalPaginas = itens.reduce((soma, item) => soma + (item.paginas ?? 0), 0);
+  const todosContados = itens.every((item) => item.paginas !== null);
+  const ocupado = analisando || preparando;
+
+  async function adicionarArquivos(novos: File[]) {
+    if (novos.length === 0) return;
+
+    const { aceitos, recusados } = validarSelecao(
+      novos,
+      itens.map((item) => item.file)
+    );
+    for (const recusa of recusados) toast.error(recusa.mensagem);
+    if (aceitos.length === 0) return;
+
+    const entradas: ArquivoSelecionado[] = aceitos.map((file) => ({
+      id: crypto.randomUUID(),
+      file,
+      paginas: null,
+    }));
+    onItensChange((atuais) => [...atuais, ...entradas]);
+
+    // Conta um por vez: cada PDF sobe para a memória do navegador durante a
+    // leitura, e em paralelo isso derrubaria celulares mais fracos.
     setAnalisando(true);
     try {
-      const num = await contarPaginas(file);
-      setPaginas(num);
-    } catch {
-      toast.error("Não foi possível ler este PDF.");
-      setArquivo(null);
+      for (const entrada of entradas) {
+        try {
+          const paginas = await contarPaginas(entrada.file);
+          onItensChange((atuais) =>
+            atuais.map((item) =>
+              item.id === entrada.id ? { ...item, paginas } : item
+            )
+          );
+        } catch {
+          toast.error(`Não foi possível ler "${entrada.file.name}".`);
+          onItensChange((atuais) => atuais.filter((item) => item.id !== entrada.id));
+        }
+      }
     } finally {
       setAnalisando(false);
     }
   }
 
   function handleSelect(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) void processarArquivo(file);
+    const files = Array.from(e.target.files ?? []);
+    // Zera o input: sem isso, reescolher o mesmo arquivo depois de removê-lo da
+    // lista não dispara `change` (o value não mudou).
+    e.target.value = "";
+    void adicionarArquivos(files);
   }
 
   function handleDrop(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
-    const file = e.dataTransfer.files?.[0];
-    if (file) void processarArquivo(file);
+    void adicionarArquivos(Array.from(e.dataTransfer.files ?? []));
   }
 
-  function avancar() {
-    if (arquivo && paginas) {
-      onPDFPronto({ file: arquivo, numPaginas: paginas });
+  function remover(id: string) {
+    onItensChange((atuais) => atuais.filter((item) => item.id !== id));
+  }
+
+  function mover(indice: number, direcao: -1 | 1) {
+    const destino = indice + direcao;
+    onItensChange((atuais) => {
+      if (destino < 0 || destino >= atuais.length) return atuais;
+      const copia = [...atuais];
+      [copia[indice], copia[destino]] = [copia[destino], copia[indice]];
+      return copia;
+    });
+  }
+
+  async function avancar() {
+    if (itens.length === 0 || !todosContados || ocupado) return;
+    const files = itens.map((item) => item.file);
+
+    // Arquivo único: envia o original, byte a byte, sem passar pela mesclagem.
+    if (files.length === 1) {
+      onPDFPronto({ file: files[0], numPaginas: totalPaginas });
+      return;
+    }
+
+    setPreparando(true);
+    try {
+      const mesclado = await mesclarPDFs(files);
+
+      if (mesclado.size > MAX_PDF_BYTES) {
+        toast.error(
+          `O PDF do pedido ficou com ${formatarTamanho(mesclado.size)} e o limite é 30 MB. Remova ou divida arquivos.`
+        );
+        return;
+      }
+
+      // Reconferência local: num_paginas divergente do PDF real é o que faz o
+      // worker mandar o pedido para ERRO — depois de pago. Barrar aqui troca
+      // uma falha pós-pagamento por uma mensagem antes de cobrar.
+      const paginasMescladas = await contarPaginas(mesclado);
+      if (paginasMescladas !== totalPaginas) {
+        toast.error(
+          "A junção dos arquivos não conferiu. Remova um arquivo e tente novamente."
+        );
+        return;
+      }
+
+      onPDFPronto({ file: mesclado, numPaginas: paginasMescladas });
+    } catch (err) {
+      console.error(err);
+      toast.error(
+        err instanceof ErroMesclagemPDF
+          ? err.message
+          : "Não foi possível juntar os arquivos. Tente novamente."
+      );
+    } finally {
+      setPreparando(false);
     }
   }
+
+  const vazio = itens.length === 0;
 
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
         <div
-          className="border-2 border-dashed border-border rounded-lg p-10 text-center hover:border-titans-orange/60 transition-colors cursor-pointer"
+          className={`border-2 border-dashed border-border rounded-lg text-center hover:border-titans-orange/60 transition-colors cursor-pointer ${
+            vazio ? "p-10" : "p-6"
+          }`}
           onClick={() => inputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
@@ -72,31 +170,93 @@ export function UploadPDF({ onPDFPronto }: Props) {
             ref={inputRef}
             type="file"
             accept="application/pdf"
+            multiple
             className="hidden"
             onChange={handleSelect}
           />
-          {!arquivo ? (
-            <>
-              <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-3" />
-              <p className="font-medium">Clique ou arraste seu PDF aqui</p>
-              <p className="text-sm text-muted-foreground mt-1">Máximo 30 MB</p>
-            </>
-          ) : (
-            <div className="flex flex-col items-center gap-2">
-              <FileText className="h-10 w-10 text-titans-orange" />
-              <p className="font-medium break-all">{arquivo.name}</p>
-              <p className="text-sm text-muted-foreground">
-                {formatarTamanho(arquivo.size)}
-                {paginas !== null && ` · ${paginas} página${paginas === 1 ? "" : "s"}`}
-                {analisando && " · analisando…"}
-              </p>
-            </div>
-          )}
+          <Upload
+            className={`mx-auto text-muted-foreground ${vazio ? "h-12 w-12 mb-3" : "h-8 w-8 mb-2"}`}
+          />
+          <p className="font-medium">
+            {vazio
+              ? "Clique ou arraste seus PDFs aqui"
+              : "Adicionar mais arquivos"}
+          </p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Até {MAX_ARQUIVOS_POR_PEDIDO} arquivos · 30 MB cada
+          </p>
         </div>
 
+        {!vazio && (
+          <ul className="space-y-2">
+            {itens.map((item, indice) => (
+              <li
+                key={item.id}
+                className="flex items-center gap-3 rounded-lg border border-border p-3"
+              >
+                <FileText className="h-5 w-5 shrink-0 text-titans-orange" />
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium break-all">{item.file.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {formatarTamanho(item.file.size)}
+                    {item.paginas === null
+                      ? " · analisando…"
+                      : ` · ${plural(item.paginas, "página", "páginas")}`}
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-1">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Mover "${item.file.name}" para cima`}
+                    disabled={indice === 0 || ocupado}
+                    onClick={() => mover(indice, -1)}
+                  >
+                    <ArrowUp className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Mover "${item.file.name}" para baixo`}
+                    disabled={indice === itens.length - 1 || ocupado}
+                    onClick={() => mover(indice, 1)}
+                  >
+                    <ArrowDown className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Remover "${item.file.name}"`}
+                    disabled={ocupado}
+                    onClick={() => remover(item.id)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {!vazio && (
+          <div className="flex items-baseline justify-between border-t border-border pt-4 text-sm">
+            <span className="text-muted-foreground">
+              {plural(itens.length, "arquivo", "arquivos")}
+            </span>
+            <span className="font-medium">
+              {todosContados
+                ? `${plural(totalPaginas, "página", "páginas")} no total`
+                : "calculando total…"}
+            </span>
+          </div>
+        )}
+
         <div className="flex justify-end">
-          <Button onClick={avancar} disabled={!arquivo || analisando || paginas === null}>
-            Continuar
+          <Button onClick={avancar} disabled={vazio || !todosContados || ocupado}>
+            {preparando ? "Preparando arquivo…" : "Continuar"}
           </Button>
         </div>
       </CardContent>
