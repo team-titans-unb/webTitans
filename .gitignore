@@ -36,6 +36,9 @@ out
 venv
 .venv
 
+# openspec
+openspec/
+
 # Python
 __pycache__/
 
