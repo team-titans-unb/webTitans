@@ -80,11 +80,17 @@ atividades atravessam quatro responsáveis: **cliente/navegador**, **Route Handl
 
 ```mermaid
 flowchart TD
-  A([Cliente abre /impressao]) --> B[Selecionar PDF]
+  A([Cliente abre /impressao]) --> B["Selecionar 1..10 PDFs<br/>(lista ordenavel)"]
   B --> C{"PDF valido?<br/>tipo application/pdf<br/>ate 30 MB"}
   C -->|nao| B
-  C -->|sim| D["Contar paginas no navegador<br/>(pdfjs-dist)"]
-  D --> E["Escolher modo de cor<br/>ver estimativa de preco (config_precos)"]
+  C -->|sim| D["Contar paginas de cada arquivo<br/>no navegador (pdfjs-dist)"]
+  D --> D2{"Mais de um<br/>arquivo?"}
+  D2 -->|nao| E
+  D2 -->|sim| D3["Mesclar no navegador (pdf-lib)"]
+  D3 --> D4{"Soma de paginas confere<br/>e mesclado ate 30 MB?"}
+  D4 -->|nao| B
+  D4 -->|sim| E
+  E["Escolher modo de cor<br/>ver estimativa de preco (config_precos)"]
   E --> F["Upload PDF direto ao Storage (anon key)<br/>INSERT fila_impressao = AGUARDANDO_PAGAMENTO"]
   F --> G["POST /api/payments/create-pix<br/>{ pedidoId }"]
 

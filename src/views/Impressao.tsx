@@ -16,6 +16,7 @@ import { TelaSucesso } from "@/components/impressao/TelaSucesso";
 import { BotaoOndeRetirar } from "@/components/impressao/BotaoOndeRetirar";
 import { StatusImpressora } from "@/components/impressao/StatusImpressora";
 import { supabase } from "@/lib/supabase";
+import type { ArquivoSelecionado } from "@/lib/pdf-utils";
 import type { ModoCor } from "@/lib/types";
 
 type Passo = "UPLOAD" | "CONFIG" | "PAGAMENTO" | "SUCESSO" | "TIMEOUT";
@@ -32,6 +33,10 @@ type DadosPagamento = {
 
 const Impressao = () => {
   const [passo, setPasso] = useState<Passo>("UPLOAD");
+  // A lista de arquivos escolhidos vive aqui (e não dentro do UploadPDF) para
+  // sobreviver ao ir e voltar entre UPLOAD e CONFIG; `file` é o PDF final do
+  // pedido — o original quando há um arquivo só, o mesclado quando há vários.
+  const [arquivos, setArquivos] = useState<ArquivoSelecionado[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [numPaginas, setNumPaginas] = useState<number>(0);
   const [valorCentavos, setValorCentavos] = useState<number>(0);
@@ -133,6 +138,8 @@ const Impressao = () => {
 
             {passo === "UPLOAD" && (
               <UploadPDF
+                itens={arquivos}
+                onItensChange={setArquivos}
                 onPDFPronto={({ file: f, numPaginas: n }) => {
                   setFile(f);
                   setNumPaginas(n);
@@ -144,9 +151,17 @@ const Impressao = () => {
             {passo === "CONFIG" && (
               <ConfiguracaoImpressao
                 numPaginas={numPaginas}
+                numArquivos={arquivos.length}
                 enviando={enviando}
                 onConfirmar={confirmarConfiguracao}
-                onVoltar={() => setPasso("UPLOAD")}
+                onVoltar={() => {
+                  // Descarta o PDF final: se a lista mudar, a mesclagem é
+                  // refeita ao concluir o upload de novo (nunca se envia um
+                  // arquivo que não corresponde à lista atual).
+                  setFile(null);
+                  setNumPaginas(0);
+                  setPasso("UPLOAD");
+                }}
               />
             )}
 
