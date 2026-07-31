@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { BotaoOndeRetirar } from "@/components/impressao/BotaoOndeRetirar";
+import { protocoloDoPedido } from "@/lib/protocolo";
 
 type Props = {
   pedidoId: string;
 };
 
 export function TelaSucesso({ pedidoId }: Props) {
-  const protocolo = pedidoId.slice(0, 8).toUpperCase();
+  const protocolo = protocoloDoPedido(pedidoId);
 
   return (
     <Card>

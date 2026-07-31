@@ -3,10 +3,12 @@
 // pelo pg_cron via net.http_post (ver migration 0003), autenticada por um
 // segredo compartilhado (CLEANUP_FUNCTION_SECRET).
 //
-// Três regras (nunca toca em PAGO não impresso):
-//   1. AGUARDANDO_PAGAMENTO há mais de 1h  -> remove PDF + apaga linha.
-//   2. IMPRESSO com printed_at > 7 dias    -> remove PDF, anula pdf_path.
-//   3. IMPRESSO com printed_at > 6 meses   -> apaga a linha (PDF já saiu em 2).
+// Quatro regras (nunca toca em PAGO não impresso nem em token ainda válido):
+//   1. AGUARDANDO_PAGAMENTO há mais de 1h     -> remove PDF + apaga linha.
+//   2. IMPRESSO com printed_at > 7 dias       -> remove PDF, anula pdf_path.
+//   3. IMPRESSO com printed_at > 6 meses      -> apaga a linha (PDF já saiu em 2).
+//   4. reimpressao_tokens expirado, ou usado
+//      há mais de 24h                         -> apaga a linha (add-reimpressao-autorizada).
 //
 // Deploy:  supabase functions deploy cleanup-fila
 // Secret:  supabase secrets set CLEANUP_FUNCTION_SECRET=<valor-aleatorio-longo>
@@ -52,13 +54,23 @@ Deno.serve(async (req) => {
   );
 
   const agora = Date.now();
+  const agoraIso = new Date(agora).toISOString();
   const umaHoraAtras = new Date(agora - 60 * 60 * 1000).toISOString();
   const seteDiasAtras = new Date(agora - 7 * 24 * 60 * 60 * 1000).toISOString();
   const seisMesesAtras = new Date(agora);
   seisMesesAtras.setMonth(seisMesesAtras.getMonth() - 6);
   const seisMesesAtrasIso = seisMesesAtras.toISOString();
+  // Mesma janela de uso-recente aplicada em reimpressao-tokens.ts (24h) — um
+  // token usado continua sendo prova de auditoria por um tempo curto antes de
+  // ser descartado.
+  const tokenUsadoHaMaisDe24h = new Date(agora - 24 * 60 * 60 * 1000).toISOString();
 
-  const resumo = { orfaos_removidos: 0, pdfs_impressos_removidos: 0, impressos_apagados: 0 };
+  const resumo = {
+    orfaos_removidos: 0,
+    pdfs_impressos_removidos: 0,
+    impressos_apagados: 0,
+    reimpressao_tokens_removidos: 0,
+  };
 
   try {
     // ---- Regra 1: órfãos AGUARDANDO_PAGAMENTO há mais de 1h ----------------
@@ -117,6 +129,16 @@ Deno.serve(async (req) => {
       if (error) throw error;
       resumo.impressos_apagados = antigos.length;
     }
+
+    // ---- Regra 4: reimpressao_tokens expirados ou usados há mais de 24h ---
+    // Preserva tokens ainda válidos (não expirados e não usados); não afeta
+    // pedidos nem PDFs.
+    const { error: errTokens, count: tokensRemovidos } = await supabase
+      .from("reimpressao_tokens")
+      .delete({ count: "exact" })
+      .or(`expira_em.lt.${agoraIso},usado_em.lt.${tokenUsadoHaMaisDe24h}`);
+    if (errTokens) throw errTokens;
+    resumo.reimpressao_tokens_removidos = tokensRemovidos ?? 0;
 
     console.log("cleanup-fila ok:", resumo);
     return new Response(JSON.stringify(resumo), {

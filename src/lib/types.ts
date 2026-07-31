@@ -3,6 +3,7 @@ export type ModoCor = "PB" | "COLORIDO";
 export type StatusPedido =
   | "AGUARDANDO_PAGAMENTO"
   | "PAGO"
+  | "IMPRIMINDO"
   | "IMPRESSO"
   | "ERRO"
   | "CANCELADO";

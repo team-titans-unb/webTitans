@@ -51,6 +51,7 @@ estados de `status`.
 7. [Operação (runbook)](07-operacao.md) — instalar/atualizar o worker, tratar `ERRO`, re-filar.
 8. [Segurança](08-seguranca.md) — segredos por ambiente, webhook, RLS.
 9. [Diagramas (UML)](09-diagramas.md) — implantação, atividades e caso de uso.
+10. [Totem de impressão (kiosk)](kiosk.md) — provisionar a Raspberry Pi da Sala 208: Chromium kiosk, watchdog e convivência com o print-worker.
 
 ## Para quem é cada documento
 
@@ -58,4 +59,5 @@ estados de `status`.
 - **Vou mexer no pagamento** → [04](04-pagamento-pix.md) e [08](08-seguranca.md).
 - **Vou mexer no banco/RLS** → [05](05-supabase.md).
 - **Vou operar/depurar a impressão na sede** → [06](06-print-worker.md) e [07](07-operacao.md).
+- **Vou provisionar/depurar o totem (Pi) da Sala 208** → [kiosk.md](kiosk.md).
 - **Quero entender o todo** → [01](01-arquitetura.md) e [02](02-fluxo-pedido.md).
