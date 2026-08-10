@@ -17,17 +17,6 @@ export default function KioskLayout({
       className="dark fixed inset-0 overflow-hidden overscroll-none bg-zinc-950 text-white select-none"
       style={{ touchAction: "manipulation" }}
     >
-      {/* Keyframes usados só no kiosk (evita tocar no tailwind.config global). */}
-      <style>{`
-        @keyframes kiosk-gradient {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        @keyframes kiosk-float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-      `}</style>
       {children}
     </div>
   );
