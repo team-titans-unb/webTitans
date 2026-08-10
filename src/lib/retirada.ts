@@ -15,18 +15,18 @@ export type FotoRetirada = {
 export const FOTOS_RETIRADA: FotoRetirada[] = [
   {
     src: "/retirada/fachada.jpg",
-    alt: "Fachada do Prédio LDTEA, na FCTE Gama, vista do caminho de pedestres",
+    alt: "Fachada do Prédio LDTEA, descendo do RU",
   },
   {
     src: "/retirada/elevador.jpg",
-    alt: "Botoeira do elevador do prédio: a Sala 208 fica no andar 2",
+    alt: "Elevador do LDTEA: Ir para o primeiro andar",
   },
   {
     src: "/retirada/corredor.jpg",
-    alt: "Corredor do segundo andar, em direção à Sala 208",
+    alt: "Corredor do primeiro andar, em direção à Sala 208",
   },
   {
     src: "/retirada/sala.jpg",
-    alt: "Porta da Sala 208 aberta, ponto de retirada das impressões",
+    alt: "Porta da Sala 208, ponto de retirada das impressões",
   },
 ];
