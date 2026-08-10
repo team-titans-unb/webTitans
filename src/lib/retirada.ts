@@ -8,25 +8,25 @@ export type FotoRetirada = {
   alt: string;
 };
 
-// Fotos do local/caminho até a sala de retirada (até 4).
-// PROVISÓRIO: apontam para placeholders em `public/retirada/` até as fotos
-// reais serem fornecidas pela equipe. Basta substituir os arquivos mantendo
-// os mesmos caminhos para atualizar a galeria.
+// Fotos do caminho até a sala de retirada, na ordem em que o cliente percorre:
+// chega no prédio, sobe de elevador, segue o corredor e chega na sala.
+// Arquivos em `public/retirada/`, já redimensionados para 1280x720 (16:9, o
+// mesmo aspect-video da galeria) — trocar uma foto é só substituir o arquivo.
 export const FOTOS_RETIRADA: FotoRetirada[] = [
   {
-    src: "/retirada/foto-1.svg",
-    alt: "Fachada do Prédio LDTEA na FCTE Gama",
+    src: "/retirada/fachada.jpg",
+    alt: "Fachada do Prédio LDTEA, na FCTE Gama, vista do caminho de pedestres",
   },
   {
-    src: "/retirada/foto-2.svg",
-    alt: "Entrada do prédio e caminho até a recepção",
+    src: "/retirada/elevador.jpg",
+    alt: "Botoeira do elevador do prédio: a Sala 208 fica no andar 2",
   },
   {
-    src: "/retirada/foto-3.svg",
-    alt: "Corredor do segundo andar em direção à Sala 208",
+    src: "/retirada/corredor.jpg",
+    alt: "Corredor do segundo andar, em direção à Sala 208",
   },
   {
-    src: "/retirada/foto-4.svg",
-    alt: "Porta da Sala 208, ponto de retirada das impressões",
+    src: "/retirada/sala.jpg",
+    alt: "Porta da Sala 208 aberta, ponto de retirada das impressões",
   },
 ];
