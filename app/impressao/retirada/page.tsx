@@ -20,9 +20,13 @@ export default function RetiradaPage() {
       <main className="pt-24 pb-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
+            {/* flex + w-fit (não inline-flex): como o Badge abaixo também é
+                inline-flex, os dois dividiam a mesma linha e o "Local de
+                Retirada" ficava colado no fim de "Voltar para a impressão".
+                w-fit mantém a área clicável do tamanho do texto. */}
             <Link
               href="/impressao"
-              className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
+              className="flex w-fit items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Voltar para a impressão
