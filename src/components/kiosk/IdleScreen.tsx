@@ -1,13 +1,18 @@
 "use client";
 
-import { KioskQRCode } from "./KioskQRCode";
-
 type Props = {
   // Qualquer toque na tela idle volta para a tela principal.
   onInteract: () => void;
 };
 
-// Tela idle (sem pedidos na fila): branding TITANS + QR para imprimir.
+// Cor média das bordas da arte: preenche as faixas de letterbox quando a tela do
+// totem não é 16:9, já que a imagem usa object-contain (nada de corte).
+const COR_FUNDO = "#883e2c";
+
+// Tela idle (sem toque há alguns minutos): arte do grupo em tela cheia. O QR e as
+// instruções já fazem parte do desenho — nada é sobreposto para não cobrir a arte.
+// O QR embutido aponta para https://www.roboticstitans.com.br/impressao; se o
+// domínio mudar, a arte precisa ser reexportada.
 export function IdleScreen({ onInteract }: Props) {
   return (
     <div
@@ -15,23 +20,15 @@ export function IdleScreen({ onInteract }: Props) {
       // click do mesmo toque "vazar" para o botão da barra inferior que surge
       // na mesma posição, abrindo um overlay acidentalmente.
       onClick={onInteract}
-      className="flex h-full w-full flex-col items-center justify-center gap-10 bg-[length:200%_200%] bg-gradient-to-br from-titans-red via-titans-orange to-titans-red p-8 text-center animate-[kiosk-gradient_10s_ease-in-out_infinite]"
+      className="flex h-full w-full items-center justify-center"
+      style={{ backgroundColor: COR_FUNDO }}
     >
-      <div className="animate-[kiosk-float_6s_ease-in-out_infinite]">
-        <h1 className="text-7xl font-black tracking-tight text-white drop-shadow-lg sm:text-8xl">
-          TITANS
-        </h1>
-        <p className="mt-2 text-2xl font-semibold uppercase tracking-[0.3em] text-white/80">
-          Impressão
-        </p>
-      </div>
-
-      <KioskQRCode path="/impressao" size={240} />
-
-      <p className="text-3xl font-bold text-white drop-shadow">
-        Imprima aqui — aponte a câmera
-      </p>
-      <p className="text-lg text-white/70">Toque na tela para ver a fila</p>
+      <img
+        src="/kiosk/idle.png"
+        alt="TITANS Impressão — aponte a câmera para o QR code ou toque na tela"
+        className="max-h-full max-w-full object-contain"
+        draggable={false}
+      />
     </div>
   );
 }
