@@ -19,7 +19,7 @@ import bannerEquipe from "@/assets/banner/Equipe.jpg";
 import bannerSenado from "@/assets/banner/Senado.jpg";
 import bannerRcx from "@/assets/banner/Rcx.jpg";
 import bannerEvento from "@/assets/banner/Evento.jpg";
-import psRoverImage from "@/assets/psRover.jpeg";
+import psRoverImage from "@/assets/ps20262.png";
 import roverTitansImage from "@/assets/roverTitans.jpeg";
 
 import seguidorGif from '@/assets/seguidorGif.gif';
@@ -391,21 +391,18 @@ const Index = () => {
               INSCRIÇÕES ABERTAS - PROJETO ROVER 2026-1
             </div>
            */}
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">INSCRIÇÕES FECHADAS</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">INSCRIÇÕES ABERTAS</h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
 
-              {/* Quer fazer parte da nossa equipe? Estamos com inscrições abertas para novos membros 
-              interessados em robótica competitiva, programação, eletrônica e gestão. */}
+              {/* Quer fazer parte da nossa equipe? As inscrições são abertas no final do segundo semestre do ano. */}
 
-               Quer fazer parte da nossa equipe? As inscrições são abertas no final do segundo semestre do ano.
-
-             {/* Quer fazer parte da nossa equipe? Estamos com inscrições abertas para novos membros 
-              interessados em contruir um rover para fins de competição. */}
+               Quer fazer parte da nossa equipe? Estamos com inscrições abertas para novos membros 
+              interessados em robótica competitiva, programação, eletrônica e gestão.
 
             </p>
 
 
-            {/* 
+            
             <div className="group relative mx-auto mb-10 max-w-md">
               <div
                 className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-to-br from-titans-red/50 via-titans-orange/40 to-titans-gold/30 opacity-70 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
@@ -431,7 +428,7 @@ const Index = () => {
                 asChild
               >
                 <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLScdpgShgFvmgjkOS31xk9nXVh3CM0WfdlsyU6ZRiP8CcqotcQ/viewform"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdj66nTFTTLZybEtYwM0oeOe_kSG4dZ03p-5teCsEh_14uD_Q/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -440,13 +437,6 @@ const Index = () => {
                 </a>
               </Button>
             </div>
-
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              
-            As inscrições são somente para o projeto rover, para os outros projetos acompanhe nossas redes sociais que em breve abrirão!
-
-            </p>
-            */}
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
               <div className="bg-card/50 backdrop-blur-sm border border-titans-orange/20 rounded-xl p-6">
