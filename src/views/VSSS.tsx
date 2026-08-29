@@ -223,7 +223,7 @@ const VSSS = () => {
                 { name: "Nathan", role: "Membro", expertise: "Equipe VSSS", photo: nathanPhoto },
                 { name: "João Canabarro", role: "Membro", expertise: "Equipe VSSS", photo: joaoCanabarroPhoto },
                 { name: "Félix", role: "Membro", expertise: "Equipe VSSS", photo: felixPhoto },
-                { name: "Arthur Silva", role: "Membro", expertise: "Equipe VSSS", photo: arthurPhoto },
+                { name: "Artur Silva", role: "Membro", expertise: "Equipe VSSS", photo: arthurPhoto },
               ].map((member, index) => (
                 <Card key={index} className="text-center">
                   <CardContent className="p-6">
