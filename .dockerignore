@@ -10,3 +10,4 @@ npm-debug.log*
 *.local
 venv
 .venv
+node_modules

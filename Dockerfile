@@ -1,8 +1,12 @@
-# Etapa 1: build da aplicação Next.js
-FROM node:22.19.0-alpine3.22 AS builder
+# Etapa 0: dependências (node_modules do Linux) — usada pelo docker compose no dev
+FROM node:22.19.0-alpine3.22 AS deps
 WORKDIR /app
 COPY package*.json ./
+COPY scripts/ ./scripts/
 RUN npm ci
+
+# Etapa 1: build da aplicação Next.js
+FROM deps AS builder
 COPY . .
 RUN npm run build
 

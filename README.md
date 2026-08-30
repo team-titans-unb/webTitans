@@ -68,7 +68,7 @@ NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=sua_public_key
 
 ## Docker
 
-Pré-requisito: ter o Docker instalado. No Windows:
+Pré-requisito: ter o Docker instalado. No Windows/Linux:
 
 ```sh
 winget install -e --id Docker.DockerDesktop
@@ -80,11 +80,11 @@ winget install -e --id Docker.DockerDesktop
 # Build da imagem
 docker build -t auth .
 
-# Executa (a imagem expõe a porta 8080)
-docker run -p 8080:8080 auth
+# Executa (a imagem expõe a porta 5000)
+docker run -p 5000:8080 auth:latest
 ```
 
-Acesse em **http://localhost:8080**.
+Acesse em **http://localhost:5000**.
 
 ### Opção B — desenvolvimento com docker compose
 
