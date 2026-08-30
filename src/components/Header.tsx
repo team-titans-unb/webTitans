@@ -2,9 +2,15 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Users } from "lucide-react";
+import { Menu, X, Users, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +22,11 @@ const Header = () => {
     { name: "Inscrições", href: "/#inscricoes" },
     { name: "Apoiar", href: "/#apoiar" },
     { name: "Projetos Destaques", href: "/projetos" },
-    { name: "Impressão", href: "/impressao" },
+  ];
+
+  const servicos = [
+    { name: "Imprima seu PDF", href: "/impressao" },
+    { name: "Impressão 3D", href: "/servicos/impressao-3d" },
   ];
 
   return (
@@ -27,12 +37,12 @@ const Header = () => {
           <Link href="/" className="flex items-center space-x-2">
 
           {/* <div className="w-10 h-10 bg-gradient-to-br from-titans-red to-titans-orange rounded-lg flex items-center justify-center">       </div>*/}
-          
-               <img src="/favicon.ico" 
-                    alt="Ícone Titans" 
-                    className="w-10 h-10 rounded-lg" 
+
+               <img src="/favicon.ico"
+                    alt="Ícone Titans"
+                    className="w-10 h-10 rounded-lg"
                 />
-                         
+
             <span className="font-bold text-xl bg-gradient-to-r from-titans-red to-titans-orange bg-clip-text text-transparent">
               TITANS
             </span>
@@ -50,8 +60,24 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
-            
-            <Link 
+
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 text-foreground/80 hover:text-foreground transition-colors outline-none">
+                Serviços
+                <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {servicos.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link href={item.href} className="cursor-pointer w-full">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Link
               href="/login"
               className="text-foreground/80 hover:text-foreground transition-colors p-2 rounded-lg hover:bg-muted/50"
               title="Área dos Membros"
@@ -89,6 +115,25 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+
+              <div className="px-3 py-2">
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Serviços
+                </p>
+                <div className="mt-1 space-y-1">
+                  {servicos.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="block py-1.5 pl-2 text-foreground/80 hover:text-foreground transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
               <div className="border-t border-border my-2" />
               <Link
                 href="/login"

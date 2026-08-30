@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Gera um build "standalone" enxuto, ideal para a imagem Docker.
+  // hot reload
   output: "standalone",
   reactStrictMode: true,
   watchOptions: {
