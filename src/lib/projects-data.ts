@@ -6,12 +6,12 @@ import {
   EXTENSAO_ESCOLAS_TITLE,
 } from "@/lib/extensao-escolas-content";
 import {
-  ROBO_BIO_COVER,
-  ROBO_BIO_DETAIL_PATH,
-  ROBO_BIO_MEMBERS,
-  ROBO_BIO_SUMMARY,
-  ROBO_BIO_TITLE,
-} from "@/lib/robo-bio-content";
+  IMPRESSAO_PROJETO_COVER,
+  IMPRESSAO_PROJETO_DETAIL_PATH,
+  IMPRESSAO_PROJETO_MEMBERS,
+  IMPRESSAO_PROJETO_SUMMARY,
+  IMPRESSAO_PROJETO_TITLE,
+} from "@/lib/impressao-projeto-content";
 
 export type ProjectMember = {
   name: string;
@@ -37,11 +37,11 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    title: ROBO_BIO_TITLE,
-    summary: ROBO_BIO_SUMMARY,
-    image: ROBO_BIO_COVER,
-    detailHref: ROBO_BIO_DETAIL_PATH,
-    members: [...ROBO_BIO_MEMBERS],
+    title: IMPRESSAO_PROJETO_TITLE,
+    summary: IMPRESSAO_PROJETO_SUMMARY,
+    image: IMPRESSAO_PROJETO_COVER,
+    detailHref: IMPRESSAO_PROJETO_DETAIL_PATH,
+    members: [...IMPRESSAO_PROJETO_MEMBERS],
     links: [],
   },
   {

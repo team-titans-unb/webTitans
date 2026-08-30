@@ -6,13 +6,16 @@ import Footer from "@/components/Footer";
 import { ArrowLeft, Trophy, Zap, Target, Users } from "lucide-react";
 import Link from "next/link";
 
+import { PlayerCard } from "@/components/PlayerCard";
+
 import seguidorEletronica from "@/assets/fotosSeguidor/seguidorCad2.png";
-import felipeDasNevesPhoto from "@/assets/fotosSeguidor/imgLipeTitans2.jpg";
-import arthurPhoto from "@/assets/fotosSeguidor/arthur.png";
-import gustavoPhoto from "@/assets/fotosSeguidor/gustavo.png";
-import henriquePhoto from "@/assets/fotosSeguidor/henrique.png";
-import joaoVictorPhoto from "@/assets/fotosSeguidor/joaoVictor.png";
-import thamiresPhoto from "@/assets/fotosSeguidor/thamires.png";
+import felipeDasNevesPhoto from "@/assets/fotosSeguidor/felipeNevesCutout.png";
+import robotChassiBackdrop from "@/assets/fotosSeguidor/chassi_sucrilho.png";
+import arthurPhoto from "@/assets/fotosSeguidor/arthur_s.png";
+import gustavoPhoto from "@/assets/fotosSeguidor/gustavo_s.png";
+import henriquePhoto from "@/assets/fotosSeguidor/henrique_s.png";
+import joaoVictorPhoto from "@/assets/fotosSeguidor/joaoVictor2_s.png";
+import thamiresPhoto from "@/assets/fotosSeguidor/thamires_s.png";
 
 import lider from '@/assets/combateGif.gif';
 
@@ -176,45 +179,50 @@ const SeguirLinha = () => {
           {/* lideres */}
           <div className="mb-12">
             <h3 className="text-xl font-semibold text-center mb-8">Gerentes de Projeto</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto items-center justify-items-center">
               {[
                 {
                   name: "Felipe das Neves",
-                  role: "Software",
-                  expertise: "Mapeamento e Controle",
                   photo: felipeDasNevesPhoto,
-                  overlayGif: FELIPE_OVERLAY_GIF,
+                  rating: 96,
+                  position: "DEV",
+                  variant: "gold" as const,
+                  stats: [
+                    { label: "CTR", value: 95 },
+                    { label: "MAP", value: 97 },
+                    { label: "VEL", value: 92 },
+                    { label: "SEN", value: 91 },
+                    { label: "COD", value: 96 },
+                    { label: "DBG", value: 94 },
+                  ],
                 },
                 {
                   name: "Arthur Vilas boas",
-                  role: "Controle",
-                  expertise: "Sensoriamento",
                   photo: arthurPhoto,
+                  rating: 91,
+                  position: "SEN",
+                  variant: "icon" as const,
+                  stats: [
+                    { label: "CTR", value: 93 },
+                    { label: "MAP", value: 88 },
+                    { label: "VEL", value: 90 },
+                    { label: "SEN", value: 96 },
+                    { label: "COD", value: 89 },
+                    { label: "DBG", value: 90 },
+                  ],
                 },
               ].map((leader, index) => (
-                <Card key={index} className="text-center">
-                  <CardContent className="p-6">
-                    <div className="relative mx-auto mb-4 h-24 w-24 overflow-hidden rounded-full border-2 border-titans-orange/25 bg-muted">
-                      <img
-                        src={leader.photo.src}
-                        alt={`Foto de ${leader.name}`}
-                        className="h-full w-full object-cover"
-                      />
-                      {"overlayGif" in leader && leader.overlayGif ? (
-                        <img
-                          src={leader.overlayGif}
-                          alt=""
-                          className="pointer-events-none absolute inset-0 h-full w-full object-cover mix-blend-screen"
-                          aria-hidden
-                          loading="eager"
-                        />
-                      ) : null}
-                    </div>
-                    <h4 className="font-semibold mb-1">{leader.name}</h4>
-                    <p className="text-titans-orange text-sm mb-2">{leader.role}</p>
-                    <p className="text-muted-foreground text-sm">{leader.expertise}</p>
-                  </CardContent>
-                </Card>
+                <PlayerCard
+                  key={index}
+                  ornate
+                  variant={leader.variant}
+                  name={leader.name}
+                  photo={leader.photo.src}
+                  backdrop={robotChassiBackdrop.src}
+                  rating={leader.rating}
+                  position={leader.position}
+                  stats={leader.stats}
+                />
               ))}
             </div>
           </div>
@@ -222,47 +230,81 @@ const SeguirLinha = () => {
           {/* membros */}
           <div>
             <h3 className="text-xl font-semibold text-center mb-8">Membros</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
               {[
                 {
                   name: "Henrique Oliveira",
-                  role: "Eletrônica",
-                  expertise: "Esquemático e Eletrônica",
                   photo: henriquePhoto,
+                  variant: "emerald" as const,
+                  rating: 87,
+                  position: "ELE",
+                  stats: [
+                    { label: "CTR", value: 84 },
+                    { label: "MAP", value: 83 },
+                    { label: "VEL", value: 85 },
+                    { label: "SEN", value: 88 },
+                    { label: "COD", value: 82 },
+                    { label: "DBG", value: 86 },
+                  ],
                 },
                 {
                   name: "Gustavo Emmanuel",
-                  role: "Projetista",
-                  expertise: "Modelagem Cad",
                   photo: gustavoPhoto,
+                  variant: "silver" as const,
+                  rating: 86,
+                  position: "CAD",
+                  stats: [
+                    { label: "CTR", value: 82 },
+                    { label: "MAP", value: 85 },
+                    { label: "VEL", value: 84 },
+                    { label: "SEN", value: 83 },
+                    { label: "COD", value: 80 },
+                    { label: "DBG", value: 88 },
+                  ],
                 },
                 {
                   name: "Thamires Ellen",
-                  role: "Controle",
-                  expertise: "Programação dos Atuadores",
                   photo: thamiresPhoto,
+                  variant: "teal" as const,
+                  rating: 85,
+                  position: "CTR",
+                  stats: [
+                    { label: "CTR", value: 90 },
+                    { label: "MAP", value: 80 },
+                    { label: "VEL", value: 83 },
+                    { label: "SEN", value: 84 },
+                    { label: "COD", value: 88 },
+                    { label: "DBG", value: 85 },
+                  ],
                 },
                 {
                   name: "João Victor",
-                  role: "Eletrônica",
-                  expertise: "Motores e Encoder",
                   photo: joaoVictorPhoto,
+                  variant: "purple" as const,
+                  rating: 84,
+                  position: "ELE",
+                  stats: [
+                    { label: "CTR", value: 80 },
+                    { label: "MAP", value: 82 },
+                    { label: "VEL", value: 86 },
+                    { label: "SEN", value: 83 },
+                    { label: "COD", value: 79 },
+                    { label: "DBG", value: 85 },
+                  ],
                 },
               ].map((member, index) => (
-                <Card key={index} className="text-center">
-                  <CardContent className="p-6">
-                    <div className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full border-2 border-titans-orange/25 bg-muted">
-                      <img
-                        src={member.photo.src}
-                        alt={`Foto de ${member.name}`}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <h4 className="font-semibold mb-1">{member.name}</h4>
-                    <p className="text-titans-orange text-sm mb-2">{member.role}</p>
-                    <p className="text-muted-foreground text-sm">{member.expertise}</p>
-                  </CardContent>
-                </Card>
+                <div key={index}>
+                  <PlayerCard
+                    variant={member.variant}
+                    photoFit="framed"
+                    name={member.name}
+                    photo={member.photo.src}
+                    rating={member.rating}
+                    position={member.position}
+                    stats={member.stats}
+                  />
+                </div>
               ))}
             </div>
           </div>
