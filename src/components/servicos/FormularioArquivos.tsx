@@ -126,7 +126,7 @@ const FormularioArquivos = () => {
               <FormItem>
                 <FormLabel>E-mail</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="voce@email.com" {...field} />
+                  <Input type="email" placeholder="email@gmail.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -140,7 +140,7 @@ const FormularioArquivos = () => {
               <FormItem>
                 <FormLabel>Telefone</FormLabel>
                 <FormControl>
-                  <Input placeholder="(61) 90000-0000" {...field} />
+                  <Input placeholder="(DDD) 90000-0000" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
