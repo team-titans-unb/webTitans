@@ -104,3 +104,7 @@ Acesse em **http://localhost:3000**.
 - Tailwind CSS
 - shadcn/ui
 - Docker
+
+## Licença
+
+Este projeto é distribuído sob a licença [GNU General Public License v3.0](LICENSE) (GPL-3.0-or-later).
