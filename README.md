@@ -1,3 +1,7 @@
+# Atualização da infra do projeto
+
+OBS.: Nova versão do sistema em produção, contemplará a atualização completa da infra do projeto.
+
 # webTitans
 
 Site da equipe de robótica **TITANS** (FCTE/UnB), construído com **Next.js (App Router)**.
